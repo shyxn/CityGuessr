@@ -1,20 +1,101 @@
-#map { 
-    height: 500px; 
+* {
+    font-family: 'Noto Sans', sans-serif;
+}
+
+body {
+    /* Mettre un dégradé de couleurs sombres */
+    background-color: rgb(26, 38, 59);
+}
+
+h1, h2, h3, h4, h5, h6, p, label {
+    margin: 0;
+    color: white;
+}
+
+
+hr{
+    border: 1px solid rgba(255, 255, 255, 1);
+    opacity: 0.5;
+}
+
+/* Title Header */
+
+#logoCityGuessr{
+    display:inline;
+    margin: 15px;
+    height: 3rem;
+}
+#titleBlock{
+    display: flex;
+    align-items: center;
+}
+#titleDescription {
+    font-weight: normal;
+    color: rgba(255, 255, 255, 0.5);
+    margin-left: 50px;
+}
+.emoji{
+    display:inline;
+    font-style: normal;
+}
+
+#explanation{
+    font-weight: 200;
+    font-size: 17px;
+    margin: 15px;
+    margin-left: 35px;
+}
+#explanation strong{
+    font-size: 13px;
+}
+
+/* Form */
+#nbOfMostPopulated{
+    width: 50px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#mainContent{
+    display:flex;
+}
+#parameters{
+    width: 50%;
+    height: fit-content;
+    background-color: rgba(26, 38, 59, 0.2);;
+    margin: 10px;
+    border-radius: 5px;
+}
+#map {
+    height: 800px;
+    width: 50%;
 }
 
 .leaflet-container.crosshair-cursor-enabled {
-    cursor:crosshair;
+    cursor: crosshair;
 }
 
-#validate{
+#validate {
     width: 100px;
     height: 30px;
     margin-top: 30px;
     border-radius: 40px;
+    background-color: black;
 }
 
-#cityName{
+#cityName {
     display: inline;
     margin-left: 200px;
+    font-weight: bold;
 }
-
