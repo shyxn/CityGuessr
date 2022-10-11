@@ -2,7 +2,7 @@
 
 const mapStartLatLng = [46.65, 2.466667];
 
-var guessPinIcon = L.icon({
+let guessPinIcon = L.icon({
     iconUrl: 'assets/vector/guessPin.svg',
     iconSize: [37, 50],
     iconAnchor: [18, 50],
@@ -10,7 +10,7 @@ var guessPinIcon = L.icon({
     shadowSize: [41, 15],
     shadowAnchor: [4, 15]
 });
-var answerPinIcon = L.icon({
+let answerPinIcon = L.icon({
     iconUrl: 'assets/vector/answerPin.svg',
     iconSize: [37, 50],
     iconAnchor: [18, 50],
@@ -18,6 +18,13 @@ var answerPinIcon = L.icon({
     shadowSize: [41, 15],
     shadowAnchor: [4, 15]
 });
+
+let prefecturesCitiesNb = 0;
+let subPrefecturesCitiesNb = 0;
+let habs50kCitiesNb = 0;
+let habs30kCitiesNb = 0;
+let mostPopulatedCitiesNb = 0;
+let allCitiesNb = 0;
 
 // Villes sélectionnées pour le jeu
 let currentCitiesData = [];
@@ -94,20 +101,25 @@ function addCity(city, container) {
     }
 }
 function select30kCities(container) {
+    habs30kCitiesNb = 0;
     allFrenchCities.forEach((city) => {
         if (city.hab2012 >= 30000 && city.departmentNumber < 100) {
             addCity(city, container);
+            habs30kCitiesNb++;
         }
     })
 }
 function select50kCities(container) {
+    habs50kCitiesNb = 0;
     allFrenchCities.forEach((city) => {
         if (city.hab2012 >= 50000 && city.departmentNumber < 100) {
             addCity(city, container);
+            habs50kCitiesNb++;
         }
     })
 }
 function selectPrefectures(container) {
+    prefecturesCitiesNb = 0;
     prefectures.forEach((city) => {
         let foundCity = [];
         foundCity = allFrenchCities.filter(frenchCity => frenchCity.name == city);
@@ -117,9 +129,11 @@ function selectPrefectures(container) {
             foundCity = foundCity.filter(frenchCity => frenchCity.hab2012 == highestHab);
         }
         addCity(foundCity[0], container);
+        prefecturesCitiesNb++;
     })
 }
 function selectSubPrefectures(container) {
+    subPrefecturesCitiesNb = 0;
     subPrefectures.forEach((city) => {
         let foundCity = [];
         foundCity = allFrenchCities.filter(frenchCity => frenchCity.name == city);
@@ -129,6 +143,27 @@ function selectSubPrefectures(container) {
             foundCity = foundCity.filter(frenchCity => frenchCity.hab2012 == highestHab);
         }
         addCity(foundCity[0], container);
+        subPrefecturesCitiesNb++;
+    })
+}
+
+function selectXMostPopulated(container, x) {
+    mostPopulatedCitiesNb = 0;
+    for (let i = 0; i < x; i++) {
+        if (allFrenchCities[i].departmentNumber < 100) {
+            addCity(allFrenchCities[i], container);
+            mostPopulatedCitiesNb++;
+        }
+    }
+}
+
+function selectAllCities(container) {
+    allCitiesNb = 0;
+    allFrenchCities.forEach((city) => {
+        if (city.departmentNumber < 100) {
+            addCity(city, container);
+            allCitiesNb++;
+        }
     })
 }
 
