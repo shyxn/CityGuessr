@@ -25,6 +25,7 @@ let habs50kCitiesNb = 0;
 let habs30kCitiesNb = 0;
 let mostPopulatedCitiesNb = 0;
 let allCitiesNb = 0;
+let departmentCitiesNb = 0;
 
 // Villes sélectionnées pour le jeu
 let currentCitiesData = [];
@@ -149,6 +150,16 @@ function selectSubPrefectures(container) {
 
 function selectXMostPopulated(container, x) {
     mostPopulatedCitiesNb = 0;
+    for (let i = 0; i < x; i++) {
+        if (allFrenchCities[i].departmentNumber < 100) {
+            addCity(allFrenchCities[i], container);
+            mostPopulatedCitiesNb++;
+        }
+    }
+}
+
+function selectDepartment(container, departmentNumber) {
+    departmentCitiesNb = 0;
     for (let i = 0; i < x; i++) {
         if (allFrenchCities[i].departmentNumber < 100) {
             addCity(allFrenchCities[i], container);
