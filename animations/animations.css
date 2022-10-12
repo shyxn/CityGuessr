@@ -14,6 +14,12 @@ body {
     width: 200px;
     overflow: hidden;
     border: 10px solid midnightblue;
+    animation: radius 3s ease infinite;
+}
+@keyframes radius {
+    100%{
+        border-radius: 20px;
+    }
 }
 
 .slideText, .cityText {
@@ -42,7 +48,6 @@ body {
     transition-timing-function: ease;
 }
 
-
 @keyframes growFromBottom {
     0% {
         transform: scaleY(0);
@@ -56,3 +61,5 @@ body {
 #button {
     margin-left: 200px;
 }
+
+

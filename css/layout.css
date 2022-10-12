@@ -1,0 +1,108 @@
+@import url(variables.css);
+
+#blueBlock, .mapBlock, #yellowBlock, .sideYellowBorder, .angle, .hide{
+    box-sizing: border-box;
+}
+
+#mainContent {
+    margin: 0 150px;
+    display: flex;
+    justify-content: center;
+    height: 75vh;
+    row-gap: 100px;
+}
+
+#blueBlock {
+    flex-shrink: 0;
+    width: 300px;
+    height: 100%;
+    background: linear-gradient(0deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.2) 100%);
+    border: var(--borderWidth) solid var(--blue);
+    border-radius: var(--borderRadius);
+    margin-right: 50px;
+}
+.blueBlockContent{
+    padding: 20px;
+}
+
+#yellowBlock {
+    display: flex;
+    position: relative;
+    height: 100%;
+    width: 100%;
+}
+
+.sideYellowBorder {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    z-index: -10;
+    border: var(--borderWidth) solid var(--lightYellow);
+    border-radius: var(--borderRadius);
+    background-color: var(--transparentYellow);
+}
+
+.sideYellowBlock{
+    flex-shrink: 0;
+    width: 300px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.infoBlock {
+    position: relative; /* Absolute children */
+    width: 100%;
+    height: 100%;
+}
+.angle{
+    border-bottom: var(--borderWidth) solid var(--yellow);
+    border-right: var(--borderWidth) solid var(--yellow);
+    border-bottom-right-radius: var(--borderRadius);
+    background-color: var(--transparentYellow);
+}
+.hide{
+    background-color: var(--darkBlueBackground);
+    border-right: var(--borderWidth) solid var(--yellow);
+}
+
+.angleBlock {
+   position: absolute;
+   height: 50px;
+   width: 75%;
+   bottom: 0;
+   right: 0;
+}
+
+.angle, .hide {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    left: 13px;
+    top: 13px;
+}
+
+.scoreBlock {
+    position: relative;
+    width: 100%;
+    border: var(--borderWidth) solid var(--yellow);
+    border-radius: var(--borderRadius) 0 0 var(--borderRadius);
+    background-color: var(--darkBlueBackground);
+    height: 300px;
+    z-index: -5;
+}
+
+.mapBlock {
+    /* height: calc(750px / var(--goldenNumber)); */
+    height: 100%;
+    width: 100%;
+    border: var(--borderWidth) solid var(--yellow);
+    border-radius: var(--borderRadius) var(--borderRadius) var(--borderRadius) 0;
+    overflow: hidden;
+}
+
+#map {
+    height: 100%;
+    width: 100%;
+}
+

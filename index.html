@@ -13,13 +13,13 @@
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.2/dist/leaflet.css"
         integrity="sha256-sA+zWATbFveLLNqWO2gtiw3HL/lh1giY/Inf1BJ0z14=" crossorigin="" />
 
-    <link rel="stylesheet" href="style.css" />
-
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/layout.css" />
     <!-- Make sure you put this AFTER Leaflet's CSS -->
     <script src="https://unpkg.com/leaflet@1.9.2/dist/leaflet.js"
         integrity="sha256-o9N1jGDZrf5tS+Ft4gbIK7mYMipq9lqpVJ91xHSyKhg=" crossorigin=""></script>
     <script type="text/javascript" src="https://stamen-maps.a.ssl.fastly.net/js/tile.stamen.js?v1.3.0"></script>
-    <title>Map test</title>
+    <title>CityGuessr</title>
 </head>
 
 <body>
@@ -38,32 +38,46 @@
 
         <div id="mainContent">
             <div id="blueBlock">
-                <form>
-                    <h3>Choisir le mode de jeu : </h3>
-                    <input type="checkbox" name="gameMode" value="prefectures" id="prefectures">
-                    <label for="prefectures">Préfectures</label><br>
-
-                    <input type="checkbox" name="gameMode" value="subprefectures" id="subprefectures">
-                    <label for="subprefectures">Sous-préfectures</label><br>
-
-                    <input type="radio" name="gameMode" value="50kHabs" id="50kHabs">
-                    <label for="50kHabs">Toutes les villes de + de 50k habitants</label><br>
-
-                    <input type="radio" name="gameMode" value="30kHabs" id="30kHabs">
-                    <label for="30kHabs">Toutes les villes de + de 30k habitants</label><br>
-
-                    <input type="radio" name="gameMode" value="mostPopulated" id="mostPopulated">
-                    <label for="mostPopulated">Les <input type="number" name="gameMode" id="nbOfMostPopulated"> villes les plus peuplées</label><br>
-                
-                    <input type="radio" name="gameMode" value="allCities" id="allCities">
-                    <label for="allCities">Toutes les communes de France Métropolitaine</label><br>
-
-                    <button type="submit">JOUER</button>
-                </form>
+                <div class="blueBlockContent">
+                    <form>
+                        <h3>Choisir le mode de jeu : </h3>
+                        <input type="checkbox" name="gameMode" value="prefectures" id="prefectures">
+                        <label for="prefectures">Préfectures</label><br>
+    
+                        <input type="checkbox" name="gameMode" value="subprefectures" id="subprefectures">
+                        <label for="subprefectures">Sous-préfectures</label><br>
+    
+                        <input type="radio" name="gameMode" value="50kHabs" id="50kHabs">
+                        <label for="50kHabs">Toutes villes de + de 50k habitants</label><br>
+    
+                        <input type="radio" name="gameMode" value="30kHabs" id="30kHabs">
+                        <label for="30kHabs">Toutes villes de + de 30k habitants</label><br>
+    
+                        <input type="radio" name="gameMode" value="mostPopulated" id="mostPopulated">
+                        <label for="mostPopulated">Les <input type="number" name="gameMode" id="nbOfMostPopulated"> villes les plus peuplées</label><br>
+                    
+                        <input type="radio" name="gameMode" value="allCities" id="allCities">
+                        <label for="allCities">Toutes les communes de France Métropolitaine</label><br>
+    
+                        <button type="submit">JOUER</button>
+                    </form>
+                </div>
             </div>
-            <div class="yellowBlock">
-
-                <div id="map"></div>
+            <div id="yellowBlock">
+                <div class="sideYellowBorder"></div>
+                <div class="sideYellowBlock">
+                    <div class="infoBlock">
+                        <div class="angleBlock">
+                            <div class="hide"></div>
+                            <div class="angle"></div>
+                        </div>
+                    </div>
+                    <div class="scoreBlock">
+                    </div>
+                </div>
+                <div class="mapBlock">
+                    <div id="map"></div>
+                </div>
             </div>
         </div>
     </main>

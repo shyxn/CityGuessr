@@ -1,3 +1,6 @@
+@import url(variables.css);
+
+
 * {
     font-family: 'Noto Sans', sans-serif;
 }
@@ -54,33 +57,6 @@ hr{
     width: 50px;
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-#mainContent{
-    display:flex;
-}
-#blueBlock{
-    width: 50%;
-    height: fit-content;
-    background-color: rgba(26, 38, 59, 0.2);;
-    margin: 10px;
-    border-radius: 5px;
-}
-#map {
-    height: 75vh;
-    width: 50%;
-}
 
 .leaflet-container.crosshair-cursor-enabled {
     cursor: crosshair;

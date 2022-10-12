@@ -1,0 +1,14 @@
+:root {
+    --yellow: rgba(247, 191, 63, 1);
+    --lightYellow: rgba(253, 227, 151, 1);
+    --transparentYellow: rgba(253, 227, 151, 0.2);
+    --green: rgba(52, 168, 83, 1);
+    --lightGreen: rgba(168, 218, 181, 1);
+    --blue: rgba(56, 120, 199, 1);
+    --darkBlueBackground: rgba(26, 38, 59, 1);
+
+    --borderWidth: 13px;
+    --borderRadius: 45px;
+
+    --goldenNumber: 1.618033988749;
+}
