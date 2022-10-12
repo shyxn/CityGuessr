@@ -70,7 +70,7 @@ hr{
 #mainContent{
     display:flex;
 }
-#parameters{
+#blueBlock{
     width: 50%;
     height: fit-content;
     background-color: rgba(26, 38, 59, 0.2);;

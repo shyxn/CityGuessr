@@ -1,0 +1,58 @@
+body {
+    background-color: black;
+}
+#hideAndShowAnimationBlock{
+    background-color: darkslateblue;
+    position: relative;
+    height: fit-content;
+}
+
+.mainBlock {
+    display: block;
+    height: 400px;
+    background-color: midnightblue;
+    width: 200px;
+    overflow: hidden;
+    border: 10px solid midnightblue;
+}
+
+.slideText, .cityText {
+    font-size: 24px;
+    color: white;
+    font-family: 'Noto Sans', sans-serif;
+}
+
+.slideText {
+    /* Permet de le garder sur une seule ligne */
+    white-space: nowrap;   
+}
+
+/* Animation 2 - scroll vertical */
+
+.cityText {
+    animation: growFromBottom 0.4s ease;
+    transform-origin: bottom center;
+    position: absolute;
+}
+
+.cityText-active {
+    transform-origin: top center;
+    transform: scaleY(0);
+    transition: 0.2s;
+    transition-timing-function: ease;
+}
+
+
+@keyframes growFromBottom {
+    0% {
+        transform: scaleY(0);
+    }
+
+    100% {
+        transforme: scaleY(1);
+    }
+}
+
+#button {
+    margin-left: 200px;
+}
