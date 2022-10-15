@@ -96,6 +96,8 @@ function calculateDistance(latlngGuess) {
 
 }
 
+
+// Vérifie si la ville n'est pas déjà présente avant de l'ajouter, pour éviter les doublons
 function addCity(city, container) {
     if (!(container.includes(city))) {
         container.push(city);
@@ -215,9 +217,57 @@ var currentPoint = citiesCoordinates[currentCity];
 document.getElementById("cityName").innerHTML = currentCity;
  */
 
-// Vérifie si la ville n'est pas déjà présente avant de l'ajouter, pour éviter les doublons
+
+function startGame() {
+    if (document.querySelector("#prefectures").checked) { selectPrefectures(); }
+    if (document.querySelector("#subprefectures").checked) { selectSubPrefectures(); }
+    let checkedModes = document.querySelectorAll('input[name="gameMode"]:checked');
+    console.log(checkedModes);
+    checkedModes.forEach(checkInput => {
+        switch (checkInput.value) {
+            case "prefectures":
+                selectPrefectures(currentCitiesData);
+                break;
+            case "subprefectures":
+                selectSubPrefectures(currentCitiesData);
+                break;
+            case "50kHabs":
+                select50kCities(currentCitiesData);
+                break;
+            case "30kHabs":
+                select30kCities(currentCitiesData);
+                break;
+            case "mostPopulated":
+                let number = document.querySelector("#mostPopulated").value;
+                selectXMostPopulated(currentCitiesData, number);
+                break;
+            case "allCities":
+                selectAllCities(currentCitiesData);
+                break;
+                case "oneDepartment":
+                select(currentCitiesData);
+                break;
+            default:
+                break;
+        })
+
+}
 
 
-selectSubPrefectures(currentCitiesData);
+}
 
 console.log(currentCitiesData);
+
+/* Désactiver element */
+button.setAttribute("disabled", "");
+
+/* Valeur d'un input */
+document.querySelector("input").value;
+
+/* Obtenir la valeur d'un checkbox */
+document.getElementById('send').checked;
+
+/* Obtenir la valeur de radiobuttons */
+document.querySelector('input[name="genderS"]:checked').value;
+
+
