@@ -43,7 +43,7 @@
                         <h3>Choisir le mode de jeu : </h3>
                         <input type="checkbox" name="gameMode" value="prefectures" id="prefectures">
                         <label for="prefectures">Préfectures</label><br>
-    
+
                         <input type="checkbox" name="gameMode" value="subprefectures" id="subprefectures">
                         <label for="subprefectures">Sous-préfectures</label><br>
     
@@ -58,7 +58,18 @@
                     
                         <input type="checkbox" name="gameMode" value="allCities" id="allCities">
                         <label for="allCities">Toutes les communes de France Métropolitaine</label><br>
-    
+
+                   
+                        <select id="browsers">
+                            <option value="Internet Explorer"></option>
+                            <option value="Firefox"></option>
+                            <option value="Chrome"></option>
+                            <option value="Opera"></option>
+                            <option value="Safari"></option>
+                        </select>
+
+                        <label for="departements">Pour un département</label><br>
+
                         <button type="submit">JOUER</button>
                     </form>
                 </div>
@@ -81,8 +92,6 @@
             </div>
         </div>
     </main>
-    <button id="validate" onclick="validate()"> Valider </button>
-    <h2 id="cityName">[city]</h2>
     <script src="domtom.js"></script>
     <script src="cities.js"></script>
     <script src="allFrenchCities.js"></script>
