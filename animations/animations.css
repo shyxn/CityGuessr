@@ -1,6 +1,10 @@
 body {
     background-color: black;
+    padding: 0;
+    margin: 0;
 }
+
+
 #hideAndShowAnimationBlock{
     background-color: darkslateblue;
     position: relative;

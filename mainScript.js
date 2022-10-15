@@ -152,11 +152,13 @@ function selectSubPrefectures(container) {
 
 function selectXMostPopulated(container, x) {
     mostPopulatedCitiesNb = 0;
-    for (let i = 0; i < x; i++) {
+    i = 0;
+    while (mostPopulatedCitiesNb < x) {
         if (allFrenchCities[i].departmentNumber < 100) {
             addCity(allFrenchCities[i], container);
             mostPopulatedCitiesNb++;
         }
+        i++;
     }
 }
 
@@ -180,6 +182,55 @@ function selectAllCities(container) {
     })
 }
 
+
+function selectCities() {
+    currentCitiesData = [];
+    let checkedModes = document.querySelectorAll('input[name="gameMode"]:checked');
+    console.log(checkedModes);
+    checkedModes.forEach(checkInput => {
+        switch (checkInput.value) {
+            case "prefectures":
+                selectPrefectures(currentCitiesData);
+                break;
+            case "subprefectures":
+                selectSubPrefectures(currentCitiesData);
+                break;
+            case "habs50k":
+                select50kCities(currentCitiesData);
+                break;
+            case "habs30k":
+                select30kCities(currentCitiesData);
+                break;
+            case "mostPopulated":
+                let number = document.querySelector("#nbOfMostPopulated").value;
+                selectXMostPopulated(currentCitiesData, number);
+                break;
+            case "allCities":
+                selectAllCities(currentCitiesData);
+                break;
+            case "oneDepartment":
+                break;
+            default:
+                break;
+        }
+    });
+    const nbOfSelectedCities = currentCitiesData.length;
+    document.querySelector('#citiesCount').innerHTML = nbOfSelectedCities.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") + ' ville' + (nbOfSelectedCities > 0 ? 's' : '');
+    document.querySelector('#validateBtn').disabled = false;
+    if (nbOfSelectedCities == 0) { 
+        document.querySelector('#validateBtn').disabled = true;
+    }
+}
+
+function resetCheckboxes() {
+    document.querySelectorAll('input[type="checkbox"][name="gameMode"]').forEach(checkbox => {
+        checkbox.removeAttribute('disabled');
+        checkbox.checked = false;
+    });
+    document.querySelectorAll('#nbOfMostPopulated, #subprefectures').forEach(el => { el.setAttribute('disabled', ''); });
+    document.querySelectorAll('#nbOfMostPopulated').value = "";
+}
+
 // === Script ===
 
 /* for (let index = 0; index < allCities.length; index++) {
@@ -198,7 +249,7 @@ map.on('click', onMapClick);
 // Assumes your Leaflet map variable is 'map'..
 L.DomUtil.addClass(map._container, 'crosshair-cursor-enabled');
 
-document.getElementById("validate").disabled = true;
+/* document.getElementById("validate").disabled = true; */
 /* 
 var nbOfCities = Object.keys(citiesCoordinates).length;
 console.log("Number of cities : " + nbOfCities);
@@ -216,47 +267,91 @@ var currentPoint = citiesCoordinates[currentCity];
 
 document.getElementById("cityName").innerHTML = currentCity;
  */
+resetCheckboxes();
+document.querySelector('#validateBtn').disabled = true;
 
 
-function startGame() {
-    if (document.querySelector("#prefectures").checked) { selectPrefectures(); }
-    if (document.querySelector("#subprefectures").checked) { selectSubPrefectures(); }
-    let checkedModes = document.querySelectorAll('input[name="gameMode"]:checked');
-    console.log(checkedModes);
-    checkedModes.forEach(checkInput => {
-        switch (checkInput.value) {
-            case "prefectures":
-                selectPrefectures(currentCitiesData);
-                break;
-            case "subprefectures":
-                selectSubPrefectures(currentCitiesData);
-                break;
-            case "50kHabs":
-                select50kCities(currentCitiesData);
-                break;
-            case "30kHabs":
-                select30kCities(currentCitiesData);
-                break;
-            case "mostPopulated":
-                let number = document.querySelector("#mostPopulated").value;
-                selectXMostPopulated(currentCitiesData, number);
-                break;
-            case "allCities":
-                selectAllCities(currentCitiesData);
-                break;
-                case "oneDepartment":
-                select(currentCitiesData);
-                break;
-            default:
-                break;
+/* Exclure #habs50k, #habs30k, #mostPopulated */
+let modeChoices = document.querySelectorAll('#habs50k, #habs30k, #mostPopulated');
+
+modeChoices.forEach(choice => {
+    choice.addEventListener('click', function () {
+        if (this.checked) {
+            document.querySelector("#nbOfMostPopulated").setAttribute('disabled', "");
+            modeChoices.forEach(otherChoice => {
+                if (this !== otherChoice) {
+                    otherChoice.checked = false;
+                    otherChoice.removeAttribute('disabled');
+                }
+            });
+        }
+    });
+});
+/* Cocher aussi les villes > 50k habs si 30k est sélectionné */
+document.querySelector("#habs30k").addEventListener('click', function () {
+    let habs50kChoice = document.querySelector('#habs50k');
+    if (this.checked) {
+        habs50kChoice.checked = true;
+        habs50kChoice.setAttribute('disabled', '');
+    }
+    else {
+        habs50kChoice.checked = false;
+        habs50kChoice.removeAttribute('disabled');
+    }
+});
+
+
+/* Exclure #allCities de tous les autres */
+document.querySelector("#allCities").addEventListener('click', function () {
+    let allChoices = document.querySelectorAll('input[name="gameMode"]');
+    if (!this.checked) {
+        resetCheckboxes();
+    }
+    else {
+        allChoices.forEach(choice => {
+            if (this !== choice) {
+                choice.checked = false;
+                choice.setAttribute('disabled', '');
+            }
         })
+    }
+});
 
-}
+/* Activer/désactiver la sous-option "Sous-préfectures" */
+document.querySelector("#prefectures").addEventListener('click', function () {
+    /* Récupérer la checkbox + le label */
+    let subprefecturesChoice = document.querySelectorAll('#subprefectures, label[for="subprefectures"]');
+    /* Apparaître */
+    if (this.checked) {
+        subprefecturesChoice.forEach(el => el.removeAttribute('disabled'));
+        /* Cacher */
+    } else {
+        subprefecturesChoice.forEach(el => el.checked = false);
+        subprefecturesChoice.forEach(el => el.setAttribute('disabled', ''));
+    }
+});
+
+/* Activer/désactiver le input number */
+document.querySelector('#mostPopulated').addEventListener('click', function () {
+    let input = document.querySelector("#nbOfMostPopulated");
+    if (this.checked) {
+        input.removeAttribute('disabled');
+    }
+    else {
+        input.setAttribute('disabled', '');
+    }
+})
+
+/* Exclusions des choix */
+
+document.querySelectorAll('input[type="checkbox"][name="gameMode"]').forEach(checkbox => {
+    checkbox.addEventListener('click', function () {
+        selectCities();
+    });
+})
 
 
-}
 
-console.log(currentCitiesData);
 
 /* Désactiver element */
 button.setAttribute("disabled", "");

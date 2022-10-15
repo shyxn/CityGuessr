@@ -10,50 +10,61 @@ body {
     background-color: rgb(26, 38, 59);
 }
 
-h1, h2, h3, h4, h5, h6, p, label {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+label {
     margin: 0;
     color: white;
 }
 
 
-hr{
+hr {
     border: 1px solid rgba(255, 255, 255, 1);
     opacity: 0.5;
 }
 
 /* Title Header */
 
-#logoCityGuessr{
-    display:inline;
+#logoCityGuessr {
+    display: inline;
     margin: 15px;
     height: 3rem;
 }
-#titleBlock{
+
+#titleBlock {
     display: flex;
     align-items: center;
 }
+
 #titleDescription {
     font-weight: normal;
     color: rgba(255, 255, 255, 0.5);
     margin-left: 50px;
 }
-.emoji{
-    display:inline;
+
+.emoji {
+    display: inline;
     font-style: normal;
 }
 
-#explanation{
+#explanation {
     font-weight: 200;
     font-size: 17px;
     margin: 15px;
     margin-left: 35px;
 }
-#explanation strong{
+
+#explanation strong {
     font-size: 13px;
 }
 
 /* Form */
-#nbOfMostPopulated{
+#nbOfMostPopulated {
     width: 50px;
 }
 
@@ -74,4 +85,51 @@ hr{
     display: inline;
     margin-left: 200px;
     font-weight: bold;
+}
+
+#gameModeChoices h3 {
+    padding-bottom: 10px;
+    font-size: 21px;
+}
+
+#gameModeChoices label {
+    line-height: 30px;
+    font-size: 16px;
+}
+
+
+#citiesCount {
+    font-size: 20px;
+    padding: 15px 0 15px 0;
+}
+
+#validateBtn {
+    width: 100px;
+    height: 40px;
+    font-weight: bold;
+    color: white;
+    box-shadow: 5px 5px 1px 0px rgba(0, 0, 0, 1);
+    background-color: var(--blue);
+    border: none;
+    border-radius: 50px;
+    align-self: center;
+    transition: 0.2s all;
+}
+
+#validateBtn:hover {
+    width: 130px;
+}
+
+#validateBtn:disabled {
+    opacity: 0.5;
+}
+
+#warningMessage {
+    font-size: 10px;
+    padding-top: 20px;
+    align-self: flex-end;
+}
+
+#subprefectures {
+    margin-left: 20px;
 }
