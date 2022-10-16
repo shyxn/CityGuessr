@@ -65,6 +65,13 @@
     display: flex;
     flex-direction: column;
 }
+#yellowContent{
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    margin:  33px;
+}
 
 .infoBlock {
     position: relative;

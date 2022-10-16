@@ -27,75 +27,10 @@ let mostPopulatedCitiesNb = 0;
 let allCitiesNb = 0;
 let departmentCitiesNb = 0;
 
-// Villes sélectionnées pour le jeu
+// Array des villes sélectionnées pour le jeu
 let currentCitiesData = [];
 
-let allCitiesCoordinates = {};
-
 // === Functions ===
-const sleep = ms => new Promise(r => setTimeout(r, ms));
-
-function writeInFile(content, filepath) {
-    // write to js file
-    const fs = require('fs');
-
-    fs.writeFile('C:/Users/mrgnl/Desktop/Laboratoire informatique/CityGuessr/resultJson', content, err => {
-        if (err) {
-            console.error(err);
-            return
-        }
-    });
-}
-
-function generateQueue() {
-    var arr = [];
-    while (arr.length < nbOfCities) {
-        var r = Math.floor(Math.random() * nbOfCities) + 1;
-        if (arr.indexOf(r) === -1) arr.push(r);
-    }
-    return arr;
-}
-
-function onMapClick(e) {
-    if (marker !== null) marker.remove();
-
-    marker = L.marker(e.latlng, {
-        icon: guessPinIcon
-    }).addTo(map);
-
-    document.getElementById("validate").disabled = false;
-}
-
-async function validate() {
-    answerMarker = L.marker(L.latLng(currentPoint), {
-        icon: answerPinIcon
-    }).addTo(map);
-    calculateDistance(marker.getLatLng());
-
-    document.getElementById("validate").disabled = true;
-    await new Promise(r => setTimeout(r, 2000));
-    marker.remove();
-    answerMarker.remove();
-    queuePos++;
-    if (queuePos == nbOfCities) {
-        document.getElementById("cityName").innerHTML = "F5 to replay";
-        document.getElementById("validate").disabled = true;
-    }
-    else {
-        currentCity = citiesKeys[(queue[queuePos] - 1)];
-        currentPoint = citiesCoordinates[currentCity];
-        document.getElementById("cityName").innerHTML = currentCity;
-    }
-}
-
-function calculateDistance(latlngGuess) {
-    var result = latlngGuess.distanceTo(L.latLng(currentPoint));
-    var kms = Math.floor(result / 1000);
-    var meters = Math.round(result - kms * 1000);
-    console.log("Result : " + kms + " Km " + meters + " m");
-
-}
-
 
 // Vérifie si la ville n'est pas déjà présente avant de l'ajouter, pour éviter les doublons
 function addCity(city, container) {
@@ -126,7 +61,7 @@ function selectPrefectures(container) {
     prefectures.forEach((city) => {
         let foundCity = [];
         foundCity = allFrenchCities.filter(frenchCity => frenchCity.name == city);
-        // Sélectionner la ville qui a le plus grand nombre d'habitants de tous.
+        // Sélectionner la ville qui a le plus grand nombre d'habitants de tous, parmi des doublons.
         if (foundCity.length > 1) {
             var highestHab = foundCity.reduce((acc, city) => acc = acc > city.hab2012 ? acc : city.hab2012, 0);
             foundCity = foundCity.filter(frenchCity => frenchCity.hab2012 == highestHab);
@@ -140,7 +75,7 @@ function selectSubPrefectures(container) {
     subPrefectures.forEach((city) => {
         let foundCity = [];
         foundCity = allFrenchCities.filter(frenchCity => frenchCity.name == city);
-        // Sélectionner la ville qui a le plus grand nombre d'habitants de tous.
+        // Sélectionner la ville qui a le plus grand nombre d'habitants de tous, parmis des doublons.
         if (foundCity.length > 1) {
             var highestHab = foundCity.reduce((acc, city) => acc = acc > city.hab2012 ? acc : city.hab2012, 0);
             foundCity = foundCity.filter(frenchCity => frenchCity.hab2012 == highestHab);
@@ -162,15 +97,15 @@ function selectXMostPopulated(container, x) {
     }
 }
 
-function selectDepartment(container, departmentNumber) {
+/* function selectDepartment(container, departmentNumber) {
     departmentCitiesNb = 0;
     for (let i = 0; i < x; i++) {
-        if (allFrenchCities[i].departmentNumber < 100) {
+        if (allFrenchCities[i].departmentNumber == departmentNumber) {
             addCity(allFrenchCities[i], container);
-            mostPopulatedCitiesNb++;
+            departmentCitiesNb++;
         }
     }
-}
+} */
 
 function selectAllCities(container) {
     allCitiesNb = 0;
@@ -181,7 +116,6 @@ function selectAllCities(container) {
         }
     })
 }
-
 
 function selectCities() {
     currentCitiesData = [];
@@ -208,17 +142,22 @@ function selectCities() {
             case "allCities":
                 selectAllCities(currentCitiesData);
                 break;
-            case "oneDepartment":
-                break;
+            /* case "oneDepartment":
+                break; */
             default:
                 break;
         }
     });
+    /* Actualisation du label indiquant le nombre de villes choisies */
     const nbOfSelectedCities = currentCitiesData.length;
     document.querySelector('#citiesCount').innerHTML = nbOfSelectedCities.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") + ' ville' + (nbOfSelectedCities > 0 ? 's' : '');
+
+    /* Button enabling/disabling */
     document.querySelector('#validateBtn').disabled = false;
-    if (nbOfSelectedCities == 0) { 
+    document.querySelector('#citiesCount').style.opacity = 1;
+    if (nbOfSelectedCities == 0) {
         document.querySelector('#validateBtn').disabled = true;
+        document.querySelector('#citiesCount').style.opacity = 0.5;
     }
 }
 
@@ -228,7 +167,9 @@ function resetCheckboxes() {
         checkbox.checked = false;
     });
     document.querySelectorAll('#nbOfMostPopulated, #subprefectures').forEach(el => { el.setAttribute('disabled', ''); });
-    document.querySelectorAll('#nbOfMostPopulated').value = "";
+    document.querySelector('#nbOfMostPopulated').value = '';
+    document.querySelector('#validateBtn').disabled = true;
+    document.querySelector('#citiesCount').style.opacity = 0.5;
 }
 
 // === Script ===
@@ -237,39 +178,18 @@ function resetCheckboxes() {
     setCoordinates(allCities[index]);   
 } */
 
-// == Set game ==
+// == Set form & layouts ==
 
 var map = L.map('map').setView(mapStartLatLng, 6);
 L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager_nolabels/{z}/{x}/{y}{r}.png', {
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
-
     maxZoom: 15
 }).addTo(map);
-map.on('click', onMapClick);
-// Assumes your Leaflet map variable is 'map'..
 L.DomUtil.addClass(map._container, 'crosshair-cursor-enabled');
 
-/* document.getElementById("validate").disabled = true; */
-/* 
-var nbOfCities = Object.keys(citiesCoordinates).length;
-console.log("Number of cities : " + nbOfCities);
-
-var citiesKeys = Object.keys(citiesCoordinates);
-var queue = generateQueue();
-console.log("Queue : " + queue);
-
-var marker = 0;
-var answerMarker = 0;
-
-var queuePos = 0;
-var currentCity = citiesKeys[(queue[queuePos] - 1)];
-var currentPoint = citiesCoordinates[currentCity];
-
-document.getElementById("cityName").innerHTML = currentCity;
- */
 resetCheckboxes();
-document.querySelector('#validateBtn').disabled = true;
 
+/* == Comportements du form == */
 
 /* Exclure #habs50k, #habs30k, #mostPopulated */
 let modeChoices = document.querySelectorAll('#habs50k, #habs30k, #mostPopulated');
@@ -287,6 +207,7 @@ modeChoices.forEach(choice => {
         }
     });
 });
+
 /* Cocher aussi les villes > 50k habs si 30k est sélectionné */
 document.querySelector("#habs30k").addEventListener('click', function () {
     let habs50kChoice = document.querySelector('#habs50k');
@@ -320,49 +241,27 @@ document.querySelector("#allCities").addEventListener('click', function () {
 /* Activer/désactiver la sous-option "Sous-préfectures" */
 document.querySelector("#prefectures").addEventListener('click', function () {
     /* Récupérer la checkbox + le label */
-    let subprefecturesChoice = document.querySelectorAll('#subprefectures, label[for="subprefectures"]');
+    let subprefecturesChoice = document.querySelector('#subprefectures');
     /* Apparaître */
-    if (this.checked) {
-        subprefecturesChoice.forEach(el => el.removeAttribute('disabled'));
-        /* Cacher */
-    } else {
-        subprefecturesChoice.forEach(el => el.checked = false);
-        subprefecturesChoice.forEach(el => el.setAttribute('disabled', ''));
+    subprefecturesChoice.disabled = !this.checked;
+    /* Cacher */
+    if (!this.checked) {
+        subprefecturesChoice.checked = false;
     }
 });
 
 /* Activer/désactiver le input number */
 document.querySelector('#mostPopulated').addEventListener('click', function () {
-    let input = document.querySelector("#nbOfMostPopulated");
-    if (this.checked) {
-        input.removeAttribute('disabled');
-    }
-    else {
-        input.setAttribute('disabled', '');
-    }
+    document.querySelector("#nbOfMostPopulated").disabled = !this.checked;
 })
 
-/* Exclusions des choix */
+/* Actualisation à chaque frappe de l'input number */
+document.querySelector('#nbOfMostPopulated').addEventListener('input', () => selectCities());
 
+/* Actualisation à chaque clic */
 document.querySelectorAll('input[type="checkbox"][name="gameMode"]').forEach(checkbox => {
     checkbox.addEventListener('click', function () {
         selectCities();
     });
 })
-
-
-
-
-/* Désactiver element */
-button.setAttribute("disabled", "");
-
-/* Valeur d'un input */
-document.querySelector("input").value;
-
-/* Obtenir la valeur d'un checkbox */
-document.getElementById('send').checked;
-
-/* Obtenir la valeur de radiobuttons */
-document.querySelector('input[name="genderS"]:checked').value;
-
 

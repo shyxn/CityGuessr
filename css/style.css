@@ -68,23 +68,62 @@ hr {
     width: 50px;
 }
 
-
 .leaflet-container.crosshair-cursor-enabled {
     cursor: crosshair;
 }
 
-#validate {
-    width: 100px;
-    height: 30px;
-    margin-top: 30px;
-    border-radius: 40px;
-    background-color: black;
+#cityName {
+    /* Permet de le garder sur une seule ligne */
+    white-space: nowrap;
+    font-weight: bold;
+    font-size: 30px;
 }
 
-#cityName {
-    display: inline;
-    margin-left: 200px;
+#cityCoordinates {
+    font-size: 20px;
+    font-style: italic;
     font-weight: bold;
+    color: var(--gray);
+    margin-top: 5px;
+}
+
+#cityHabitants {
+    margin-top: 30px;
+    font-size: 18px;
+}
+#cityDepartment {
+    font-size: 18px;
+}
+
+#distanceGuessed {
+    margin-top: 40px;
+    font-size: 38px;
+    font-weight: bold;
+    align-self: center;
+}
+
+#guessBtn {
+    width: 150px;
+    height: 50px;
+    margin-top: 25px;
+    font-size: 17px;
+    font-weight: bold;
+    color: white;
+    box-shadow: 5px 5px 1px 0px rgba(0, 0, 0, 1);
+    background-color: var(--green);
+    border: none;
+    border-radius: 50px;
+    align-self: center;
+    transition: 0.2s all;
+    margin-bottom: 20px;
+}
+
+#guessBtn:hover:enabled {
+    width: 180px;
+}
+
+#validateBtn:disabled {
+    opacity: 0.5;
 }
 
 #gameModeChoices h3 {
@@ -96,7 +135,6 @@ hr {
     line-height: 30px;
     font-size: 16px;
 }
-
 
 #citiesCount {
     font-size: 20px;
@@ -116,7 +154,7 @@ hr {
     transition: 0.2s all;
 }
 
-#validateBtn:hover {
+#validateBtn:hover:enabled {
     width: 130px;
 }
 
