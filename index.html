@@ -42,29 +42,32 @@
                     <div id="gameModeChoices">
                         <h3>Choisir les villes à ajouter</h3>
                         <form>
-                            
+
                             <div class="choice">
                                 <input type="checkbox" name="gameMode" value="habs50k" id="habs50k">
                                 <label for="habs50k">Toutes villes de + de 50k habitants</label><br>
                             </div>
-        
+
                             <div class="choice">
                                 <input type="checkbox" name="gameMode" value="habs30k" id="habs30k">
                                 <label for="habs30k">Toutes villes de + de 30k habitants</label><br>
                             </div>
-        
+
                             <div class="choice">
                                 <input type="checkbox" name="gameMode" value="mostPopulated" id="mostPopulated">
-                                <label for="mostPopulated">Les <input type="number" name="gameMode" id="nbOfMostPopulated" disabled> villes les plus peuplées*</label><br>
-                                
-                            </div><hr>
+                                <label for="mostPopulated">Les <input type="number" name="gameMode"
+                                        id="nbOfMostPopulated" disabled> villes les plus peuplées*</label><br>
+
+                            </div>
+                            <hr>
                             <div class="choice">
                                 <input type="checkbox" name="gameMode" value="prefectures" id="prefectures">
                                 <label for="prefectures">Préfectures</label><br>
                             </div>
-    
+
                             <div class="choice">
-                                <input type="checkbox" name="gameMode" value="subprefectures" id="subprefectures" disabled>
+                                <input type="checkbox" name="gameMode" value="subprefectures" id="subprefectures"
+                                    disabled>
                                 <label for="subprefectures">Sous-préfectures</label><br>
                             </div>
                             <hr>
@@ -80,10 +83,10 @@
                                 <option value="Opera"></option>
                                 <option value="Safari"></option>
                             </select> -->
-    
+
                             <!-- <label for="departements">Choisir un département : </label><br>-->
-    
-                            
+
+
                         </form>
                         <p id="warningMessage">*non-stable.</p>
                         <p id="citiesCount">0 ville</p>
@@ -91,31 +94,39 @@
                     </div>
                 </div>
             </div>
-            <div id="yellowBlock">
-                <div class="sideYellowBorder"></div>
-                <div class="sideYellowBlock">
-                    <div class="infoBlock">
-                        <div id="yellowContent">
-                            <p id="cityName">Châlons en Champagne</p>
-                            <p id="cityCoordinates">46.2355325, 6.23524</p>
-                            <p id="cityHabitants">12 495 habitants</p>
-                            <p id="cityDepartment">Département de l'Aude (45)</p>
-                            <p id="distanceGuessed">45.38 km</p>
-                            <button id="guessBtn">VALIDER</button>
-                        </div>
-                        <div class="angleBlock">
-                            <div class="hide"></div>
-                            <div class="angle"></div>
-                        </div>
-                    </div>
-                    <div class="scoreBlock">
-                        <p id="scoreInfo">Score : 568</p>
-                        <p id="progression">30 / 123 villes</p>
-                        <p id="progressionPercentage">24.39 %</p>
-                    </div>
+            <div id="rightSide">
+                <div id="greenBlock">
+    
                 </div>
-                <div class="mapBlock">
-                    <div id="map"></div>
+                <div id="yellowBlock">
+                    <div class="sideYellowBorder"></div>
+                    <div class="sideYellowBlock">
+                        <div id="infoBlock">
+                            <div id="yellowContent">
+                                <p id="cityName">Châlons en Champagne</p>
+                                <p id="cityPostalCode">53624</p>
+                                <p id="cityCoordinates">46.2355325, 6.23524</p>
+                                <p id="cityHabitants">12 495 habitants</p>
+                                <p id="cityDepartment">Département de l'Aude (45)</p>
+                                <p id="distanceGuessed">45.38 km</p>
+                                <button id="guessBtn">VALIDER</button>
+                            </div>
+                            <div class="angleBlock">
+                                <div class="hide"></div>
+                                <div class="angle"></div>
+                            </div>
+                        </div>
+                        <div id="scoreBlock">
+                            <div id="scoreContent">
+                                <p id="scoreInfo">Score : 568</p>
+                                <p id="progression">30 / 123 villes</p>
+                                <p id="progressionPercentage">24.39 %</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mapBlock">
+                        <div id="map"></div>
+                    </div>
                 </div>
             </div>
         </div>

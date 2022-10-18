@@ -2,82 +2,95 @@
 
 let allCitiesCoordinates = {};
 let currentCityToGuess = null;
+let currentCityLatLng = null;
 let cityIndex = 0;
+let progression = 0;
+
+
+let guessBtn = document.getElementById('guessBtn');
+let infoSectionElements = {
+    cityName: document.getElementById('cityName'),
+    cityPostalCode: document.getElementById('cityPostalCode'),
+    cityCoordinates: document.getElementById('cityCoordinates'),
+    cityHabitants: document.getElementById('cityHabitants'),
+    cityDepartment: document.getElementById('cityDepartment'),
+    distanceGuessed: document.getElementById('distanceGuessed'),   
+}
+let scoreSectionElements = {
+    scoreInfo: document.getElementById('scoreInfo'),
+    progression: document.getElementById('progression'),
+    progressionPercentage: document.getElementById('progressionPercentage')
+}
+
+
+let playerMarker = null;
+let answerMarker = null;
+
 
 /* Functions */
 
-async function djagojfogjaValidate() {
-    answerMarker = L.marker(L.latLng(currentPoint), {
-        icon: answerPinIcon
-    }).addTo(map);
-    calculateDistance(marker.getLatLng());
-
-    document.getElementById("validate").disabled = true;
-    await new Promise(r => setTimeout(r, 2000));
-    marker.remove();
-    answerMarker.remove();
-    queuePos++;
-    if (queuePos == nbOfCities) {
-        document.getElementById("cityName").innerHTML = "F5 to replay";
-        document.getElementById("validate").disabled = true;
-    }
-    else {
-        currentCity = citiesKeys[(queue[queuePos] - 1)];
-        currentPoint = citiesCoordinates[currentCity];
-        document.getElementById("cityName").innerHTML = currentCity;
-    }
-}
-
 function calculateDistance(latlngGuess) {
-    var result = latlngGuess.distanceTo(L.latLng(currentPoint));
-    var kms = Math.floor(result / 1000);
-    var meters = Math.round(result - kms * 1000);
-    console.log("Result : " + kms + " Km " + meters + " m");
+    return latlngGuess.distanceTo(L.latLng((currentCityToGuess.latitude, currentCityToGuess.longitude))) / 1000;
 }
 const sleep = ms => new Promise(r => setTimeout(r, ms));
 
-function generateQueue() {
-    var arr = [];
-    while (arr.length < nbOfCities) {
-        var r = Math.floor(Math.random() * nbOfCities) + 1;
-        if (arr.indexOf(r) === -1) arr.push(r);
-    }
-    return arr;
-}
 
 function onMapClick(e) {
-    if (marker !== null) marker.remove();
+    /* Supprimer le marqueur précédent */
+    if (playerMarker !== null) playerMarker.remove();
 
-    marker = L.marker(e.latlng, {
+    /* Afficher le marqueur à l'endroit du clic */
+    playerMarker = L.marker(e.latlng, {
         icon: guessPinIcon
     }).addTo(map);
 
-    document.getElementById("validate").disabled = false;
+    /* Activer le bouton de validation */
+    guessBtn.disabled = false;
 }
 
 
 function createGame(){
+    console.log("Création de la partie...");
     /* Cacher les éléments dans blueBlock */
-
-    /* Remplir allCitiesCoordinates à partir de currentCitiesData */
-    
+    document.getElementById('gameModeChoices').style.display = "none";
+    document.getElementById('blueBlock').style.width = "300px"
     /* Randomiser currentCitiesData */
     currentCitiesData.sort(() => Math.random() - 0.5);
     console.log(currentCitiesData);
     startNewTurn();
+    console.log("La partie a été créée. Commencement du premier tour avec", currentCityToGuess.name);
 }
 
 function startNewTurn() {
 
     if (cityIndex <= currentCitiesData.length) {
-        
+        console.log(infoSectionElements);
+        Object.values(infoSectionElements).forEach((value, index) => value.innerHTML = " ")
         currentCityToGuess = currentCitiesData[cityIndex];
-        document.getElementById('cityName').innerHTML = currentCityToGuess.name;
+        infoSectionElements.cityName.innerHTML = currentCityToGuess.name;
+        scoreSectionElements.progression.innerHTML = cityIndex + " / " + currentCitiesData.length + " villes"
+        progression = cityIndex / currentCitiesData.length;
+        scoreSectionElements.progressionPercentage.innerHTML = (progression * 100) + " %";
+        map.on('click', onMapClick);
     }
     /* Le jeu s'arrête */
     else {
         endGame();
     }
+}
+
+function endTurn() {
+    /* Afficher les infos de la ville */
+    infoSectionElements.cityPostalCode.innerHTML = currentCityToGuess.postalCode;
+    infoSectionElements.cityCoordinates.innerHTML = currentCityToGuess.latitude + " " + currentCityToGuess.longitude;
+    infoSectionElements.cityHabitants.innerHTML = currentCityToGuess.hab2012 + " habitants";
+    /* Calculate distance */
+    infoSectionElements.distanceGuessed.innerHTML = calculateDistance(playerMarker.getLatLng())
+    /* Afficher le pin réponse */
+    answerMarker = L.marker(e.latlng, {
+        icon: guessPinIcon
+    }).addTo(map);
+
 }
 function endGame(){
 
@@ -87,9 +100,10 @@ function endGame(){
 
 /* When #validateBtn is clicked */
 document.querySelector('#validateBtn').addEventListener('click', () => createGame())
+guessBtn.addEventListener('click', () => endTurn())
+guessBtn.disabled = true;
 
 
-map.on('click', onMapClick);
 /* document.getElementById("validate").disabled = true; */
 /* 
 var nbOfCities = Object.keys(citiesCoordinates).length;

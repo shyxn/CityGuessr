@@ -1,6 +1,5 @@
 @import url(variables.css);
 
-
 * {
     font-family: 'Noto Sans', sans-serif;
 }
@@ -22,13 +21,12 @@ label {
     color: white;
 }
 
-
 hr {
     border: 1px solid rgba(255, 255, 255, 1);
     opacity: 0.5;
 }
 
-/* Title Header */
+/* #region Title & Header */
 
 #logoCityGuessr {
     display: inline;
@@ -55,15 +53,16 @@ hr {
 #explanation {
     font-weight: 200;
     font-size: 17px;
-    margin: 15px;
-    margin-left: 35px;
+    margin: 0 35px 15px 15px;
 }
 
 #explanation strong {
     font-size: 13px;
 }
 
-/* Form */
+/* #endregion Title & Header */
+
+
 #nbOfMostPopulated {
     width: 50px;
 }
@@ -72,11 +71,21 @@ hr {
     cursor: crosshair;
 }
 
+/* #region Yellow side */
+
+#yellowContent p:not(#cityName) {
+    white-space: pre-wrap;
+}
+
 #cityName {
     /* Permet de le garder sur une seule ligne */
     white-space: nowrap;
     font-weight: bold;
     font-size: 30px;
+}
+#cityPostalCode {
+    font-size: 25px;
+    font-weight: 300;
 }
 
 #cityCoordinates {
@@ -84,19 +93,20 @@ hr {
     font-style: italic;
     font-weight: bold;
     color: var(--gray);
-    margin-top: 5px;
+    margin-top: 15px;
 }
 
 #cityHabitants {
-    margin-top: 30px;
+    margin-top: 20px;
     font-size: 18px;
 }
+
 #cityDepartment {
     font-size: 18px;
 }
 
 #distanceGuessed {
-    margin-top: 40px;
+    margin-top: 20px;
     font-size: 38px;
     font-weight: bold;
     align-self: center;
@@ -105,7 +115,9 @@ hr {
 #guessBtn {
     width: 150px;
     height: 50px;
-    margin-top: 25px;
+    position: absolute;
+    bottom: 33px;
+    margin: 25px 0 15px 0;
     font-size: 17px;
     font-weight: bold;
     color: white;
@@ -115,12 +127,30 @@ hr {
     border-radius: 50px;
     align-self: center;
     transition: 0.2s all;
-    margin-bottom: 20px;
 }
 
 #guessBtn:hover:enabled {
     width: 180px;
 }
+
+#guessBtn:disabled {
+    opacity: 0.5;
+}
+
+#scoreContent p {
+    font-size: 28px;
+    font-weight: bold;
+}
+#scoreInfo {
+
+}
+#progression, #progressionPercentage {
+    color: var(--gray);
+}
+
+/* #endregion Yellow side */
+
+/* #region Blue side */
 
 #validateBtn:disabled {
     opacity: 0.5;
@@ -139,6 +169,10 @@ hr {
 #citiesCount {
     font-size: 20px;
     padding: 15px 0 15px 0;
+}
+
+#subprefectures {
+    margin-left: 20px;
 }
 
 #validateBtn {
@@ -168,6 +202,4 @@ hr {
     align-self: flex-end;
 }
 
-#subprefectures {
-    margin-left: 20px;
-}
+/* #endregion Blue side */
