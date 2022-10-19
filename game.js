@@ -66,7 +66,7 @@ function createGame() {
 }
 
 function startNewTurn() {
-    
+
     /* Nettoyer affichages */
     if (playerMarker !== null) playerMarker.remove();
     if (answerMarker !== null) answerMarker.remove();
@@ -74,18 +74,18 @@ function startNewTurn() {
     progression = cityIndex / currentCitiesData.length;
     scoreSectionElements.progression.innerHTML = cityIndex + " / " + currentCitiesData.length + " villes"
     scoreSectionElements.progressionPercentage.innerHTML = (progression * 100).toFixed(2) + " %";
-    
-    
+
+
     if (cityIndex < currentCitiesData.length) {
         console.log(infoSectionElements);
         currentCityToGuess = currentCitiesData[cityIndex];
         changeTitle(currentCityToGuess.name);
         currentCityLatLng = L.latLng(parseFloat(currentCityToGuess.latitude.toString().replace(',', '.')), parseFloat(currentCityToGuess.longitude.toString().replace(',', '.')));
-        
+
         map.on('click', onMapClick);
         isGuessing = true;
         guessBtn.removeEventListener('click', startNewTurn);
-        
+
     }
     /* Le jeu s'arrête */
     else {
@@ -98,13 +98,31 @@ function endTurn() {
     infoSectionElements.cityPostalCode.innerHTML = (currentCityToGuess.postalCode.length == 4 ? "0" : '') + currentCityToGuess.postalCode;
     infoSectionElements.cityCoordinates.innerHTML = currentCityToGuess.latitude.toString().replace(',', '.') + ", " + currentCityToGuess.longitude.toString().replace(',', '.');
     infoSectionElements.cityHabitants.innerHTML = currentCityToGuess.hab2012.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") + " habitants";
+
+    let currentDepartment = departmentsList.filter(dep => dep.depNumber == currentCityToGuess.departmentNumber)[0];
+    
+    let depDenom = (el) => {
+        switch (el) {
+            case "L":
+                return "de l'";
+            case "P":
+                return "des ";
+            case "M":
+                return "du ";
+            case "F":
+                return "de la ";
+            case "N":
+                return "de ";
+        }
+    };
+    infoSectionElements.cityDepartment.innerHTML = "Département " + depDenom(currentDepartment.depDenom) + currentDepartment.depName + " (" + currentDepartment.depNumber + ")";
     /* Calculate distance */
     infoSectionElements.distanceGuessed.innerHTML = calculateDistance(playerMarker.getLatLng()) + " km";
     /* Afficher le pin réponse */
     answerMarker = L.marker(currentCityLatLng, {
         icon: answerPinIcon
     }).addTo(map);
-    map.on('click', () => {});
+    map.on('click', () => { });
     isGuessing = false;
     cityIndex++;
 
