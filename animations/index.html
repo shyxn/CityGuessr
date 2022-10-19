@@ -26,14 +26,12 @@
 
     <button id="button" onclick="changeTitle()">Animer</button>
 
-
-    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script> -->
     <script>
 
         var title = document.querySelector(".slideText");
 
         function isOverflown(element) {
-            return element.scrollHeight > element.clientHeight || element.scrollWidth > element.clientWidth;
+            return element.scrollWidth > element.clientWidth;
         }
 
         if (isOverflown(title)) {
@@ -59,6 +57,7 @@
             const nextText = document.createElement("p");
             nextText.appendChild(document.createTextNode(firstText.textContent == "Paris" ? "Avignon" : "Paris"));
             nextText.classList.add('cityText');
+            nextText.style.position = "absolute";
             // Ajouter le prochain titre
             const container = document.getElementById("hideAndShowAnimationBlock");
             container.appendChild(nextText);
@@ -66,6 +65,7 @@
             setTimeout(() => {
                 // Supprimer l'ancien titre
                 firstText.remove();
+                nextText.style.position = "static";
             }, 200);
         }
     </script>

@@ -15,6 +15,7 @@
 
     <link rel="stylesheet" href="css/style.css" />
     <link rel="stylesheet" href="css/layout.css" />
+    <link rel="stylesheet" href="css/animations.css" />
     <!-- Make sure you put this AFTER Leaflet's CSS -->
     <script src="https://unpkg.com/leaflet@1.9.2/dist/leaflet.js"
         integrity="sha256-o9N1jGDZrf5tS+Ft4gbIK7mYMipq9lqpVJ91xHSyKhg=" crossorigin=""></script>
@@ -103,11 +104,13 @@
                     <div class="sideYellowBlock">
                         <div id="infoBlock">
                             <div id="yellowContent">
-                                <p id="cityName">Châlons en Champagne</p>
+                                <div id="cityNameBlock" style="overflow: hidden">
+                                    <p id="cityName" class="cityText">Châlons en Champagne</p>
+                                </div>
                                 <p id="cityPostalCode">53624</p>
                                 <p id="cityCoordinates">46.2355325, 6.23524</p>
                                 <p id="cityHabitants">12 495 habitants</p>
-                                <p id="cityDepartment">Département de l'Aude (45)</p>
+                                <p id="cityDepartment">Département des Pyrénées-Atlantiques (45)</p>
                                 <p id="distanceGuessed">45.38 km</p>
                                 <button id="guessBtn">VALIDER</button>
                             </div>
@@ -136,6 +139,7 @@
     <script src="data/allFrenchCities.js"></script>
     <script src="mainScript.js"></script>
     <script src="game.js"></script>
+    <script src="animations.js"></script>
 </body>
 
 </html>

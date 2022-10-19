@@ -1,0 +1,21 @@
+.cityText {
+    animation: growFromBottom 0.4s ease;
+    transform-origin: bottom center;
+}
+
+.cityText-active {
+    transform-origin: top center;
+    transform: scaleY(0);
+    transition: 0.2s;
+    transition-timing-function: ease;
+}
+
+@keyframes growFromBottom {
+    0% {
+        transform: scaleY(0);
+    }
+
+    100% {
+        transforme: scaleY(1);
+    }
+}
