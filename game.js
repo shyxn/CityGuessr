@@ -5,7 +5,11 @@ let currentCityToGuess = null;
 let currentCityLatLng = null;
 let cityIndex = 0;
 let progression = 0;
+let totalScore = 0;
+let currentScore = 0;
 let isGuessing = false;
+let maxScoreBound = 300;
+let minScoreBound = 10;
 
 
 let guessBtn = document.getElementById('guessBtn');
@@ -16,13 +20,13 @@ let infoSectionElements = {
     cityHabitants: document.getElementById('cityHabitants'),
     cityDepartment: document.getElementById('cityDepartment'),
     distanceGuessed: document.getElementById('distanceGuessed'),
+    addedScore: document.getElementById('addedScore')
 }
 let scoreSectionElements = {
     scoreInfo: document.getElementById('scoreInfo'),
     progression: document.getElementById('progression'),
     progressionPercentage: document.getElementById('progressionPercentage')
 }
-
 
 let playerMarker = null;
 let answerMarker = null;
@@ -38,16 +42,19 @@ const sleep = ms => new Promise(r => setTimeout(r, ms));
 
 
 function onMapClick(e) {
-    /* Supprimer le marqueur précédent */
-    if (playerMarker !== null) playerMarker.remove();
+    if (isGuessing) {
 
-    /* Afficher le marqueur à l'endroit du clic */
-    playerMarker = L.marker(e.latlng, {
-        icon: guessPinIcon
-    }).addTo(map);
+        /* Supprimer le marqueur précédent */
+        if (playerMarker !== null) playerMarker.remove();
 
-    /* Activer le bouton de validation */
-    guessBtn.disabled = false;
+        /* Afficher le marqueur à l'endroit du clic */
+        playerMarker = L.marker(e.latlng, {
+            icon: guessPinIcon
+        }).addTo(map);
+
+        /* Activer le bouton de validation */
+        guessBtn.disabled = false;
+    }
 }
 
 const guessBtnClick = () => isGuessing ? endTurn() : startNewTurn();
@@ -71,9 +78,8 @@ function startNewTurn() {
     if (playerMarker !== null) playerMarker.remove();
     if (answerMarker !== null) answerMarker.remove();
     Object.values(infoSectionElements).forEach((value, index) => value.innerHTML = " ")
-    progression = cityIndex / currentCitiesData.length;
-    scoreSectionElements.progression.innerHTML = cityIndex + " / " + currentCitiesData.length + " villes"
-    scoreSectionElements.progressionPercentage.innerHTML = (progression * 100).toFixed(2) + " %";
+    infoSectionElements.addedScore.style.color = "white";
+
 
 
     if (cityIndex < currentCitiesData.length) {
@@ -82,7 +88,7 @@ function startNewTurn() {
         changeTitle(currentCityToGuess.name);
         currentCityLatLng = L.latLng(parseFloat(currentCityToGuess.latitude.toString().replace(',', '.')), parseFloat(currentCityToGuess.longitude.toString().replace(',', '.')));
 
-        map.on('click', onMapClick);
+
         isGuessing = true;
         guessBtn.removeEventListener('click', startNewTurn);
 
@@ -95,12 +101,12 @@ function startNewTurn() {
 
 function endTurn() {
     /* Afficher les infos de la ville */
-    infoSectionElements.cityPostalCode.innerHTML = (currentCityToGuess.postalCode.length == 4 ? "0" : '') + currentCityToGuess.postalCode;
+    infoSectionElements.cityPostalCode.innerHTML = (currentCityToGuess.postalCode.toString().length == 4 ? "0" : '') + currentCityToGuess.postalCode;
     infoSectionElements.cityCoordinates.innerHTML = currentCityToGuess.latitude.toString().replace(',', '.') + ", " + currentCityToGuess.longitude.toString().replace(',', '.');
     infoSectionElements.cityHabitants.innerHTML = currentCityToGuess.hab2012.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") + " habitants";
 
+    if (currentCityToGuess.departmentNumber == "") { currentCityToGuess.departmentNumber = 20 }
     let currentDepartment = departmentsList.filter(dep => dep.depNumber == currentCityToGuess.departmentNumber)[0];
-    
     let depDenom = (el) => {
         switch (el) {
             case "L":
@@ -115,16 +121,46 @@ function endTurn() {
                 return "de ";
         }
     };
+
     infoSectionElements.cityDepartment.innerHTML = "Département " + depDenom(currentDepartment.depDenom) + currentDepartment.depName + " (" + currentDepartment.depNumber + ")";
-    /* Calculate distance */
-    infoSectionElements.distanceGuessed.innerHTML = calculateDistance(playerMarker.getLatLng()) + " km";
+    animateCityInfos();
+    setTimeout(() => {
+        /* Calculate distance */
+        let distanceGuessed = calculateDistance(playerMarker.getLatLng());
+        infoSectionElements.distanceGuessed.innerHTML = distanceGuessed + " km";
+
+        /* Calculate score */
+        distanceGuessed = Math.floor(distanceGuessed);
+        currentScore = distanceGuessed <= minScoreBound ? maxScoreBound : maxScoreBound - distanceGuessed;
+        if (currentScore < 0) { currentScore = 0 }
+        totalScore += currentScore;
+
+        /* Display scores */
+        infoSectionElements.addedScore.innerHTML = "+" + currentScore + " pts";
+        scoreSectionElements.scoreInfo.innerHTML = "Score : " + totalScore;
+
+        if (currentScore == maxScoreBound) {
+            infoSectionElements.addedScore.style.color = "var(--yellow)";
+        }
+        animateCurrentScoreInfos();
+    }, "20")
+
+
     /* Afficher le pin réponse */
     answerMarker = L.marker(currentCityLatLng, {
         icon: answerPinIcon
     }).addTo(map);
-    map.on('click', () => { });
+
     isGuessing = false;
+
     cityIndex++;
+
+    /* Actualiser la progression */
+    progression = cityIndex / currentCitiesData.length;
+    scoreSectionElements.progression.innerHTML = cityIndex + " / " + currentCitiesData.length + " villes"
+    scoreSectionElements.progressionPercentage.innerHTML = (progression * 100).toFixed(2) + " %";
+    document.getElementById('progressionBlock').style.width = progression * 100 + "%";
+
 
 }
 function endGame() {
@@ -137,7 +173,7 @@ function endGame() {
 document.querySelector('#validateBtn').addEventListener('click', () => createGame())
 guessBtn.addEventListener('click', guessBtnClick);
 guessBtn.disabled = true;
-
+map.on('click', onMapClick);
 
 /* document.getElementById("validate").disabled = true; */
 /* 

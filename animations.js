@@ -42,7 +42,7 @@ function changeTitle(newCityName) {
     const container = document.getElementById("cityNameBlock");
     container.prepend(nextText);
     slideAnimEl = nextText;
-    
+
     setTimeout(() => {
         // Supprimer l'ancien titre
         firstText.remove();
@@ -50,3 +50,29 @@ function changeTitle(newCityName) {
         slideCityName(slideAnimEl);
     }, 200);
 }
+
+function animateCityInfos() {
+    document.querySelectorAll('#yellowContent > p').forEach(label => {
+        label.classList.add('infoLabel-active');
+    })
+    setTimeout(() => {
+        document.querySelectorAll('#yellowContent > p').forEach(label => {
+            label.classList.remove('infoLabel-active');
+        })
+    }, "310")
+
+}
+
+
+function animateCurrentScoreInfos() {
+    document.querySelectorAll('#currentScoreBlock > p').forEach(label => {
+        label.classList.add('infoLabel-active');
+    })
+    setTimeout(() => {
+        document.querySelectorAll('#currentScoreBlock > p').forEach(label => {
+            label.classList.remove('infoLabel-active');
+        })
+    }, "310")
+}
+
+

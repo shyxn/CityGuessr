@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="icon" type="image/png" href="./assets/answerPin_favicon.png">
     <link
         href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
         rel="stylesheet">
@@ -57,7 +58,7 @@
                             <div class="choice">
                                 <input type="checkbox" name="gameMode" value="mostPopulated" id="mostPopulated">
                                 <label for="mostPopulated">Les <input type="number" name="gameMode"
-                                        id="nbOfMostPopulated" disabled> villes les plus peuplées*</label><br>
+                                        id="nbOfMostPopulated" disabled> villes les plus peuplées</label><br>
 
                             </div>
                             <hr>
@@ -97,7 +98,7 @@
             </div>
             <div id="rightSide">
                 <div id="greenBlock">
-    
+                    <div id="progressionBlock"></div>
                 </div>
                 <div id="yellowBlock">
                     <div class="sideYellowBorder"></div>
@@ -111,7 +112,10 @@
                                 <p id="cityCoordinates">46.2355325, 6.23524</p>
                                 <p id="cityHabitants">12 495 habitants</p>
                                 <p id="cityDepartment">Département des Pyrénées-Atlantiques (45)</p>
-                                <p id="distanceGuessed">45.38 km</p>
+                                <div id="currentScoreBlock">
+                                    <p id="distanceGuessed">45.38 km</p>
+                                    <p id="addedScore">+298 points</p>
+                                </div>
                                 <button id="guessBtn">VALIDER</button>
                             </div>
                             <div class="angleBlock">
@@ -121,7 +125,7 @@
                         </div>
                         <div id="scoreBlock">
                             <div id="scoreContent">
-                                <p id="scoreInfo">Score : 568</p>
+                                <p id="scoreInfo">Score : 4940</p>
                                 <p id="progression">30 / 123 villes</p>
                                 <p id="progressionPercentage">24.39 %</p>
                             </div>

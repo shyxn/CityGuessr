@@ -31,6 +31,7 @@ hr {
 #logoCityGuessr {
     display: inline;
     margin: 15px;
+    margin-left: 55px;
     height: 3rem;
 }
 
@@ -42,18 +43,19 @@ hr {
 #titleDescription {
     font-weight: normal;
     color: rgba(255, 255, 255, 0.5);
-    margin-left: 50px;
+    margin: 10px 0 0 50px;
 }
 
 .emoji {
     display: inline;
     font-style: normal;
+    margin-right: 5px;
 }
 
 #explanation {
     font-weight: 200;
     font-size: 17px;
-    margin: 0 35px 15px 15px;
+    margin: 0 35px 15px 55px;
 }
 
 #explanation strong {
@@ -97,19 +99,31 @@ hr {
 }
 
 #cityHabitants {
-    margin-top: 20px;
-    font-size: 18px;
+    margin-top: 15px;
+    font-size: 14px;
 }
 
 #cityDepartment {
-    font-size: 18px;
     margin-top: 5px;
+    font-size: 14px;
+}
+
+#currentScoreBlock {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
 
 #distanceGuessed {
-    margin-top: 20px;
-    font-size: 38px;
+    margin-top: 15px;
+    font-size: 32px;
     font-weight: bold;
+    align-self: center;
+}
+
+#addedScore {
+    font-size: 24px;
     align-self: center;
 }
 
