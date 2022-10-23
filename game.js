@@ -143,7 +143,7 @@ function endTurn() {
             infoSectionElements.addedScore.style.color = "var(--yellow)";
         }
         animateCurrentScoreInfos();
-    }, "20")
+    }, "50")
 
 
     /* Afficher le pin réponse */

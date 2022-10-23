@@ -74,5 +74,3 @@ function animateCurrentScoreInfos() {
         })
     }, "310")
 }
-
-
