@@ -1,0 +1,50 @@
+body {
+    background-color: #1a263b;
+    padding: 0;
+    margin: 0;
+}
+
+
+
+
+.square-flat {
+    background: #1a263b;
+    box-shadow: 2px 2px 3px #0f1622,
+        -2px -2px 3px #253654;
+}
+
+.square-concave {
+    background: linear-gradient(145deg, #172235, #1c293f);
+    box-shadow: 2px 2px 3px #0f1622,
+        -2px -2px 3px #253654;
+}
+
+.square-convex {
+    background: linear-gradient(145deg, #1c293f, #172235);
+    box-shadow: 2px 2px 3px #0f1622,
+        -2px -2px 3px #253654;
+}
+
+.square-pressed {
+    background: #1a263b;
+    box-shadow: inset 2px 2px 3px #0f1622,
+        inset -2px -2px 3px #253654;
+}
+
+#square:active {
+    background: #1a263b;
+    box-shadow: inset 2px 2px 3px #0f1622,
+        inset -2px -2px 3px #253654;
+}
+
+#square:hover :not(.square-pressed){
+    background: linear-gradient(145deg, #172235, #1c293f);
+    box-shadow: 2px 2px 3px #0f1622,
+        -2px -2px 3px #253654;
+}
+
+#square {
+    width: 20px;
+    height: 20px;
+    margin: 200px;
+}

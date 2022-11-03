@@ -25,7 +25,6 @@ function slideCityName(slideAnimEl) {
 slideCityName(document.getElementById("cityName"));
 
 function changeTitle(newCityName) {
-    slideAnimation.pause();
     var firstText = document.querySelector(".cityText");
 
     // Déclencher l'animation de shrink vers le haut

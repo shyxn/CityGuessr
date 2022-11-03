@@ -54,7 +54,7 @@
     display: flex;
 }
 #progressionBlock {
-    width: 100%;
+    width: 0;
     border-radius: 100px;
     box-sizing: border-box;
     background-color: var(--green);

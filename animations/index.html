@@ -8,66 +8,23 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
         rel="stylesheet">
-    <link rel="stylesheet" href="animations.css">
+    <link rel="stylesheet" href="neumorphism.css">
     <title>Test animations</title>
 </head>
 
 <body>
 
-    <div class="mainBlock">
-        <div class="titleBlock">
-            <p class="slideText">Châlons-en-Champagne</p>
-        </div>
-    </div>
-    <div id="hideAndShowAnimationBlock">
-
-        <p class="cityText">Châlons-en-Champagne</p>
-    </div>
-
-    <button id="button" onclick="changeTitle()">Animer</button>
+    <div id="square" class="square-convex"></div>
 
     <script>
+        document.getElementById('square').addEventListener('click', () => {
+            let square = document.getElementById('square');
+            if (condition) {
+                
+            }
+            document.getElementById('square').classList.add('square-pressed');
+        })
 
-        var title = document.querySelector(".slideText");
-
-        function isOverflown(element) {
-            return element.scrollWidth > element.clientWidth;
-        }
-
-        if (isOverflown(title)) {
-            let gap = title.scrollWidth - title.clientWidth;
-            title.animate([
-                // keyframes
-                {transform: 'translateX(0)', offset: 0.1},
-                {transform: 'translateX(-' + gap + 'px)', offset: 0.4},
-                {transform: 'translateX(-' + gap + 'px)', offset: 0.6},
-                {transform: 'translateX(0)', offset: 0.9}
-            ], {
-                // timing options
-                duration: 7000,
-                iterations: Infinity
-            });
-        }
-
-        function changeTitle() {
-            var firstText = document.querySelector(".cityText");
-            // Déclencher l'animation de shrink vers le haut
-            firstText.classList.toggle('cityText-active');
-            // Créer le prochain titre
-            const nextText = document.createElement("p");
-            nextText.appendChild(document.createTextNode(firstText.textContent == "Paris" ? "Avignon" : "Paris"));
-            nextText.classList.add('cityText');
-            nextText.style.position = "absolute";
-            // Ajouter le prochain titre
-            const container = document.getElementById("hideAndShowAnimationBlock");
-            container.appendChild(nextText);
-
-            setTimeout(() => {
-                // Supprimer l'ancien titre
-                firstText.remove();
-                nextText.style.position = "static";
-            }, 200);
-        }
     </script>
 </body>
 
